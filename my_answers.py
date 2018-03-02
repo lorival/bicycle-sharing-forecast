@@ -21,12 +21,12 @@ class NeuralNetwork(object):
         delta_weights_h_o = np.zeros(self.weights_hidden_to_output.shape)
         for X, y in zip(features, targets):
             
-            final_outputs, hidden_outputs = self.forward_pass_train(X)
+            final_outputs, hidden_outputs = self.forward_pass(X)
             delta_weights_i_h, delta_weights_h_o = self.backpropagation(final_outputs, hidden_outputs, X, y, 
                                                                         delta_weights_i_h, delta_weights_h_o)
         self.update_weights(delta_weights_i_h, delta_weights_h_o, n_records)
 
-    def forward_pass_train(self, X):
+    def forward_pass(self, X):
         hidden_inputs = np.dot(X, self.weights_input_to_hidden) 
         hidden_outputs = self.activation_function(hidden_inputs)
 
@@ -57,13 +57,7 @@ class NeuralNetwork(object):
             ---------
             features: 1D array of feature values
         '''
-
-        hidden_inputs = np.dot(features, self.weights_input_to_hidden)
-        hidden_outputs = self.activation_function(hidden_inputs) 
-        
-        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) 
-        final_outputs = final_inputs 
-        
+        final_outputs, hidden_outputs = self.forward_pass(features)
         return final_outputs
 
 

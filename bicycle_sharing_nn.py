@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class NeuralNetwork(object):
     def __init__(self, input_nodes, hidden_nodes, output_nodes, learning_rate):
         self.input_nodes = input_nodes
@@ -20,10 +19,9 @@ class NeuralNetwork(object):
         delta_weights_i_h = np.zeros(self.weights_input_to_hidden.shape)
         delta_weights_h_o = np.zeros(self.weights_hidden_to_output.shape)
         for X, y in zip(features, targets):
-            
             final_outputs, hidden_outputs = self.forward_pass(X)
-            delta_weights_i_h, delta_weights_h_o = self.backpropagation(final_outputs, hidden_outputs, X, y, 
-                                                                        delta_weights_i_h, delta_weights_h_o)
+            delta_weights_i_h, delta_weights_h_o = self.backpropagation(
+                final_outputs, hidden_outputs, X, y, delta_weights_i_h, delta_weights_h_o)
         self.update_weights(delta_weights_i_h, delta_weights_h_o, n_records)
 
     def forward_pass(self, X):
@@ -47,23 +45,20 @@ class NeuralNetwork(object):
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
-        self.weights_hidden_to_output += self.lr * delta_weights_h_o / n_records 
-        self.weights_input_to_hidden += self.lr * delta_weights_i_h / n_records 
+        self.weights_hidden_to_output += self.calculate_weights(delta_weights_h_o, n_records) 
+        self.weights_input_to_hidden += self.calculate_weights(delta_weights_i_h, n_records)
+
+    def calculate_weights(self, delta_weights, n_records):
+        return self.lr * delta_weights / n_records
 
     def run(self, features):
-        ''' Run a forward pass through the network with input features 
-        
-            Arguments
-            ---------
-            features: 1D array of feature values
-        '''
         final_outputs, hidden_outputs = self.forward_pass(features)
         return final_outputs
 
 
-#########################################################
-# Set your hyperparameters here
-##########################################################
+####################
+# Hyperparameters
+####################
 iterations = 2500
 learning_rate = 1.0
 hidden_nodes = 10

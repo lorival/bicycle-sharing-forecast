@@ -45,7 +45,7 @@ The core data set is related to  the two-year historical log corresponding to ye
 or
 > ``` 
 > conda create --name bicycle-sharing-forecast python=3
-> conda activate bicycle-sharing-forecast
+> source activate bicycle-sharing-forecast
 > conda install numpy matplotlib pandas jupyter notebook
 > ```
 3. Start jupyter notebook
@@ -57,3 +57,5 @@ or
 ## Author
 
 [Lorival Smolski Chapuis](https://github.com/lorival)
+> This project was developed during the [deep-learning](https://br.udacity.com/course/deep-learning-nanodegree-foundation--nd101) nanodegree from [Udacity](https://br.udacity.com/) 
+
